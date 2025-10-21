@@ -1,9 +1,9 @@
-﻿import os, json, time, logging, requests, random
+import os, json, time, logging, requests, random
 from datetime import datetime, date
 from pathlib import Path
 from dotenv import load_dotenv
 import schedule
-from app.telegram_simple import TelegramSimple
+from telegram_simple import TelegramSimple
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
@@ -75,10 +75,10 @@ def format_live_alert(match, prob):
     home = teams.get('home', {}).get('name', 'Home')
     away = teams.get('away', {}).get('name', 'Away')
     score = match.get('goals', {})
-    return f"⚠️ *ALERTA LIVE — GOLO PROVÁVEL*\n\n{home} vs {away}\nProb: *{prob*100:.1f}%*\nScore: {score.get('home',0)} - {score.get('away',0)}\nTempo: {fixture.get('status', {}).get('elapsed')}′"
+    return f"?? *ALERTA LIVE � GOLO PROV�VEL*\n\n{home} vs {away}\nProb: *{prob*100:.1f}%*\nScore: {score.get('home',0)} - {score.get('away',0)}\nTempo: {fixture.get('status', {}).get('elapsed')}'"
 
 def format_prelive(pred):
-    return f"📅 *PRE-LIVE*\n{pred.get('home')} vs {pred.get('away')}\nConfiança: *{pred.get('confidence',0)*100:.1f}%*"
+    return f"?? *PRE-LIVE*\n{pred.get('home')} vs {pred.get('away')}\nConfian�a: *{pred.get('confidence',0)*100:.1f}%*"
 
 def live_check_and_alert():
     logging.info('LIVE check...')
@@ -97,7 +97,7 @@ def live_check_and_alert():
             save_notified(already_alerted)
 
 def pre_live_daily_job():
-    logging.info('PRE-LIVE diário...')
+    logging.info('PRE-LIVE di�rio...')
     preds = get_pre_live_matches_today()
     for p in preds[:20]:
         pred = {'home': p.get('homeTeam', {}).get('name',''), 'away': p.get('awayTeam', {}).get('name',''), 'confidence': round(random.uniform(0.75,0.9),2)}
