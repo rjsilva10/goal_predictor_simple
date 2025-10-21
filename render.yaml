@@ -1,8 +1,8 @@
 ﻿services:
-  - type: web
+  - type: worker
     name: goal_predictor_simple
     env: python
-    plan: free
-    region: frankfurt
-    buildCommand: pip install -r requirements.txt
-    startCommand: python app/predictor_service.py
+    startCommand: python app/telegram_on_demand.py
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
